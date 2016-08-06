@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  coordinator:
+    build: ./presto-coordinator
+    ports:
+      - "8080:8080"
+    container_name: "coordinator"
+  worker0:
+    build: ./presto-worker
+    container_name: "worker0"
+    ports:
+      - "8081:8080"
