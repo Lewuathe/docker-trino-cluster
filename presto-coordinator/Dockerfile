@@ -6,4 +6,4 @@ EXPOSE 8080
 
 WORKDIR /usr/local/presto
 
-ENTRYPOINT ["./bin/launcher", "run"]
+CMD ["./bin/launcher", "run"]

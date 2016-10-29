@@ -5,7 +5,7 @@
 FROM ubuntu:14.04
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=0.153-SNAPSHOT
+ENV PRESTO_VERSION=0.156-SNAPSHOT
 ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
@@ -19,7 +19,7 @@ RUN apt-get install -y curl tar sudo rsync python wget
 #     tar --strip-components=1 -xz -C /usr/java/default/
 
 ADD jdk-8u101-linux-x64.tar.gz /usr/java
-RUN ln -s /usr/java/jdk-8u101 /usr/java/default
+RUN sudo ln -s /usr/java/jdk1.8.0_101/ /usr/java/default
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
