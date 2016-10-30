@@ -5,8 +5,7 @@ docker-presto-cluster is a timple tool for launching multiple node [Presto](http
 ## Build image
 
 ```
-$ cd presto-base
-$ docker built -t lewuathe/presto-base:latest .
+$ make
 ```
 
 ## Launch presto
@@ -14,11 +13,7 @@ $ docker built -t lewuathe/presto-base:latest .
 Presto cluster can be launched by using docker-compose.
 
 ```
-$ cd docker-presto-cluster
-# Build images
-$ docker-compose build
-# Launch docker containers
-$ docker-compose up -d
+$ make run
 ```
 
 # LICENSE
