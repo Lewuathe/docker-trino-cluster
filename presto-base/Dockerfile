@@ -18,8 +18,8 @@ RUN apt-get install -y curl tar sudo rsync python wget
 #     curl -Ls 'http://download.oracle.com/otn-pub/java/jdk/8u92-b14/jdk-8u92-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie' | \
 #     tar --strip-components=1 -xz -C /usr/java/default/
 
-ADD jdk-8u101-linux-x64.tar.gz /usr/java
-RUN sudo ln -s /usr/java/jdk1.8.0_101/ /usr/java/default
+ADD jdk-8u112-linux-x64.tar.gz /usr/java
+RUN sudo ln -s /usr/java/jdk1.8.0_112/ /usr/java/default
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
