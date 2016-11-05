@@ -13,8 +13,7 @@ script:
   - ./mvnw clean package -DskipTests
   - mv presto/presto-server/target/presto-server-0.156-SNAPSHOT.tar.gz
   - cd ..
-  - docker build -t lewuathe/presto-base:latest presto-base
-  - docker-compose build
+  - make
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
