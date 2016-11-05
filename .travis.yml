@@ -1,4 +1,12 @@
+language: java
 sudo: required
+
+env:
+  global:
+    - MAVEN_OPTS="-Xmx512M"
+    - MAVEN_SKIP_CHECKS_AND_DOCS="-Dair.check.skip-all=true -Dmaven.javadoc.skip=true"
+
+
 
 services:
   - docker
@@ -8,9 +16,14 @@ before_install:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - git submodule update --init
 
+install:
+  - cd presto
+  - ./mvnw install -DskipTests $MAVEN_SKIP_CHECKS_AND_DOCS -B -q -T C1 -pl '!presto-docs,!presto-server-rpm'
+
 script:
   - cd presto
-  - ./mvnw clean package -pl presto-server -DskipTests
+  - ./mvnw package install -DskipTests -B -T C1 -pl presto-server
+  - ll presto/presto-server/target
   - cp presto/presto-server/target/presto-server-0.157-SNAPSHOT.tar.gz ../presto-base
   - cd ..
   - make
