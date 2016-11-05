@@ -1,4 +1,4 @@
-# docker-presto-cluster
+# docker-presto-cluster [![Build Status](https://travis-ci.org/Lewuathe/docker-presto-cluster.svg?branch=master)](https://travis-ci.org/Lewuathe/docker-presto-cluster)
 
 docker-presto-cluster is a timple tool for launching multiple node [Presto](https://prestodb.io/) cluster on docker container.
 
