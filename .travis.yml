@@ -11,7 +11,7 @@ before_install:
 script:
   - cd presto
   - ./mvnw clean package -DskipTests
-  - mv presto/presto-server/target/presto-server-0.156-SNAPSHOT.tar.gz
+  - cp presto/presto-server/target/presto-server-0.156-SNAPSHOT.tar.gz ../presto-base
   - cd ..
   - make
 
