@@ -1,0 +1,25 @@
+sudo: required
+
+servides:
+  - docker
+
+before_install:
+  - docker info
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - git submodule update --init
+
+script:
+  - cd presto
+  - ./mvnw clean package -DskipTests
+  - mv presto/presto-server/target/presto-server-0.156-SNAPSHOT.tar.gz
+  - cd ..
+  - docker build -t lewuathe/presto-base:latest presto-base
+  - docker-compose build
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push lewuathe/presto-base:latest;
+    docker push lewuathe/presto-coordinator:latest;
+    docker push lewuathe/presto-worker:latest;
+    fi
