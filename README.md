@@ -1,7 +1,7 @@
 # docker-presto-cluster [![Build Status](https://travis-ci.org/Lewuathe/docker-presto-cluster.svg?branch=master)](https://travis-ci.org/Lewuathe/docker-presto-cluster)
 
 docker-presto-cluster is a simple tool for launching multiple node [Presto](https://prestodb.io/) cluster on docker container.
-The image is synched with the master branch of [presto repository](https://github.com/prestodb/presto). Therefore you can try the latest presto for developing purpose easily. 
+The image is synched with the master branch of [presto repository](https://github.com/prestodb/presto). Therefore you can try the latest presto for developing purpose easily.
 
 ## Build image
 
@@ -46,4 +46,4 @@ $ docker-compose up -d
 
 # LICENSE
 
-[MIT License](https://github.com/Lewuathe/docker-presto-cluster/blob/master/LICENSE)
+[Apache v2 License](https://github.com/Lewuathe/docker-presto-cluster/blob/master/LICENSE)
