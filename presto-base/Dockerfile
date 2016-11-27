@@ -5,7 +5,7 @@
 FROM ubuntu:14.04
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=0.157-SNAPSHOT
+ENV PRESTO_VERSION=0.158-SNAPSHOT
 ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
@@ -18,8 +18,8 @@ RUN mkdir -p /usr/java/default && \
      curl -Ls 'http://download.oracle.com/otn-pub/java/jdk/8u92-b14/jdk-8u92-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie' | \
      tar --strip-components=1 -xz -C /usr/java/default/
 
-#ADD jdk-8u112-linux-x64.tar.gz /usr/java
-#RUN sudo ln -s /usr/java/jdk1.8.0_112/ /usr/java/default
+# ADD jdk-8u112-linux-x64.tar.gz /usr/java
+# RUN sudo ln -s /usr/java/jdk1.8.0_112/ /usr/java/default
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
