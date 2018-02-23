@@ -12,3 +12,6 @@ run:
 
 down:
 	docker-compose down
+
+cli:
+	docker exec -it coordinator /usr/bin/presto
