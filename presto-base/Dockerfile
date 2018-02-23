@@ -5,7 +5,7 @@
 FROM ubuntu:14.04
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=0.192-SNAPSHOT
+ENV PRESTO_VERSION=0.195
 ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
@@ -25,9 +25,12 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
 WORKDIR /usr/local
-ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
-# RUN wget ${BASE_URL}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
+# ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
+RUN wget ${BASE_URL}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && tar zxvf presto-server-${PRESTO_VERSION}.tar.gz
 RUN ln -s /usr/local/presto-server-${PRESTO_VERSION} $PRESTO_HOME
+
+RUN wget ${BASE_URL}/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar -O /usr/bin/presto
+RUN chmod +x /usr/bin/presto 
 
 # Create data dir
 RUN mkdir -p $PRESTO_HOME/data
