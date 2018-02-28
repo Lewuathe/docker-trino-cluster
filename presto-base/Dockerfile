@@ -29,6 +29,10 @@ ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
 # RUN wget ${BASE_URL}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
 RUN ln -s /usr/local/presto-server-${PRESTO_VERSION} $PRESTO_HOME
 
+# CLI
+ADD presto /usr/bin/ 
+RUN chmod +x /usr/bin/presto
+
 # Create data dir
 RUN mkdir -p $PRESTO_HOME/data
 VOLUME ["$PRESTO_HOME/etc", "$PRESTO_HOME/data"]
