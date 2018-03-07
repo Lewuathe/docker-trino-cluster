@@ -11,7 +11,8 @@ ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
 # install dev tools
 RUN apt-get update
-RUN apt-get install -y curl tar sudo rsync python wget
+RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential
+RUN pip install jinja2
 
 # java
 RUN mkdir -p /usr/java/default && \
@@ -29,6 +30,8 @@ ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
 # RUN wget ${BASE_URL}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
 RUN ln -s /usr/local/presto-server-${PRESTO_VERSION} $PRESTO_HOME
 
+ADD scripts ${PRESTO_HOME}/scripts
+
 # Create data dir
 RUN mkdir -p $PRESTO_HOME/data
-VOLUME ["$PRESTO_HOME/etc", "$PRESTO_HOME/data"]
+VOLUME ["$PRESTO_HOME/data"]

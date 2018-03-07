@@ -1,13 +1,36 @@
-version: '2'
+version: '3'
 
 services:
   coordinator:
-    build: ./presto-coordinator
+    build: 
+      context: ./presto-coordinator
+      args:
+        node_id: coordinator
     ports:
       - "8080:8080"
     container_name: "coordinator"
+
   worker0:
-    build: ./presto-worker
+    build: 
+      context: ./presto-worker
+      args:
+        node_id: worker0
     container_name: "worker0"
     ports:
       - "8081:8081"
+  worker1:
+    build: 
+      context: ./presto-worker
+      args:
+        node_id: worker1
+    container_name: "worker1"
+    ports:
+      - "8082:8081"
+  worker2:
+    build: 
+      context: ./presto-worker
+      args:
+        node_id: worker2
+    container_name: "worker2"
+    ports:
+      - "8083:8081"
