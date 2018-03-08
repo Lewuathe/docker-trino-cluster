@@ -2,7 +2,7 @@
 # This docker image is for launching test purpose presto cluster.
 #
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER lewuathe
 
 ENV PRESTO_VERSION=0.196-SNAPSHOT
