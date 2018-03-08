@@ -5,7 +5,7 @@
 FROM ubuntu:16.04
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=0.196-SNAPSHOT
+ENV PRESTO_VERSION=0.197-SNAPSHOT
 ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
