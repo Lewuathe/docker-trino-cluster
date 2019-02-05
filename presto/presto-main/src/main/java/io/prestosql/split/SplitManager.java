@@ -1,0 +1,83 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.prestosql.split;
+
+import io.prestosql.Session;
+import io.prestosql.connector.ConnectorId;
+import io.prestosql.execution.QueryManagerConfig;
+import io.prestosql.metadata.TableLayoutHandle;
+import io.prestosql.spi.connector.ConnectorSession;
+import io.prestosql.spi.connector.ConnectorSplitManager;
+import io.prestosql.spi.connector.ConnectorSplitManager.SplitSchedulingStrategy;
+import io.prestosql.spi.connector.ConnectorSplitSource;
+
+import javax.inject.Inject;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.requireNonNull;
+
+public class SplitManager
+{
+    private final ConcurrentMap<ConnectorId, ConnectorSplitManager> splitManagers = new ConcurrentHashMap<>();
+    private final int minScheduleSplitBatchSize;
+
+    @Inject
+    public SplitManager(QueryManagerConfig config)
+    {
+        this.minScheduleSplitBatchSize = config.getMinScheduleSplitBatchSize();
+    }
+
+    public void addConnectorSplitManager(ConnectorId connectorId, ConnectorSplitManager connectorSplitManager)
+    {
+        requireNonNull(connectorId, "connectorId is null");
+        requireNonNull(connectorSplitManager, "connectorSplitManager is null");
+        checkState(splitManagers.putIfAbsent(connectorId, connectorSplitManager) == null, "SplitManager for connector '%s' is already registered", connectorId);
+    }
+
+    public void removeConnectorSplitManager(ConnectorId connectorId)
+    {
+        splitManagers.remove(connectorId);
+    }
+
+    public SplitSource getSplits(Session session, TableLayoutHandle layout, SplitSchedulingStrategy splitSchedulingStrategy)
+    {
+        ConnectorId connectorId = layout.getConnectorId();
+        ConnectorSplitManager splitManager = getConnectorSplitManager(connectorId);
+
+        ConnectorSession connectorSession = session.toConnectorSession(connectorId);
+
+        ConnectorSplitSource source = splitManager.getSplits(
+                layout.getTransactionHandle(),
+                connectorSession,
+                layout.getConnectorHandle(),
+                splitSchedulingStrategy);
+
+        SplitSource splitSource = new ConnectorAwareSplitSource(connectorId, layout.getTransactionHandle(), source);
+        if (minScheduleSplitBatchSize > 1) {
+            splitSource = new BufferingSplitSource(splitSource, minScheduleSplitBatchSize);
+        }
+        return splitSource;
+    }
+
+    private ConnectorSplitManager getConnectorSplitManager(ConnectorId connectorId)
+    {
+        ConnectorSplitManager result = splitManagers.get(connectorId);
+        checkArgument(result != null, "No split manager for connector '%s'", connectorId);
+        return result;
+    }
+}
