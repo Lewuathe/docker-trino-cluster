@@ -1,3 +1,0 @@
-[submodule "presto"]
-	path = presto
-	url = https://github.com/prestodb/presto.git
