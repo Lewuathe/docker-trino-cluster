@@ -5,7 +5,7 @@
 FROM openjdk:8-slim
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=303-SNAPSHOT
+ENV PRESTO_VERSION=302
 ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
