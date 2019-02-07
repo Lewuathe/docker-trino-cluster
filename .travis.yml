@@ -14,9 +14,8 @@ before_install:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 install:
-  - cd presto
-  - ./mvnw install -DskipTests $MAVEN_SKIP_CHECKS_AND_DOCS -B -q -T C1
-  - cp presto-server/target/presto-server-303-SNAPSHOT.tar.gz ../presto-base
+  - wget https://repo1.maven.org/maven2/io/prestosql/presto-server/302/presto-server-302.tar.gz
+  - cp presto-server-302.tar.gz ../presto-base
 
 script:
   - cd ..
