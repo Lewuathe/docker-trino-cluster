@@ -38,12 +38,12 @@ import io.prestosql.spi.type.Type;
 import io.prestosql.spi.type.TypeSignature;
 import io.prestosql.sql.planner.Plan;
 import io.prestosql.sql.planner.plan.ExchangeNode;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.ColumnConstraint;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.FormattedDomain;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.FormattedMarker;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.FormattedRange;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.IOPlan;
-import io.prestosql.sql.planner.planPrinter.IOPlanPrinter.IOPlan.TableColumnInfo;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.ColumnConstraint;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.FormattedDomain;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.FormattedMarker;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.FormattedRange;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.IoPlan;
+import io.prestosql.sql.planner.planPrinter.IoPlanPrinter.IoPlan.TableColumnInfo;
 import io.prestosql.testing.MaterializedResult;
 import io.prestosql.testing.MaterializedRow;
 import io.prestosql.tests.AbstractTestIntegrationSmokeTest;
@@ -97,6 +97,7 @@ import static io.prestosql.plugin.hive.HiveUtil.columnExtraInfo;
 import static io.prestosql.spi.predicate.Marker.Bound.EXACTLY;
 import static io.prestosql.spi.security.SelectedRole.Type.ROLE;
 import static io.prestosql.spi.type.BigintType.BIGINT;
+import static io.prestosql.spi.type.BooleanType.BOOLEAN;
 import static io.prestosql.spi.type.CharType.createCharType;
 import static io.prestosql.spi.type.DecimalType.createDecimalType;
 import static io.prestosql.spi.type.DoubleType.DOUBLE;
@@ -175,12 +176,12 @@ public class TestHiveIntegrationSmokeTest
     public void testIOExplain()
     {
         // Test IO explain with small number of discrete components.
-        computeActual("CREATE TABLE test_orders WITH (partitioned_by = ARRAY['orderkey']) AS select custkey, orderkey FROM orders where orderkey < 3");
+        computeActual("CREATE TABLE test_orders WITH (partitioned_by = ARRAY['orderkey', 'processing']) AS select custkey, orderkey, orderstatus = 'P' processing FROM orders where orderkey < 3");
 
-        MaterializedResult result = computeActual("EXPLAIN (TYPE IO, FORMAT JSON) INSERT INTO test_orders SELECT custkey, orderkey FROM test_orders where custkey <= 10");
+        MaterializedResult result = computeActual("EXPLAIN (TYPE IO, FORMAT JSON) INSERT INTO test_orders SELECT custkey, orderkey, processing FROM test_orders where custkey <= 10");
         assertEquals(
-                jsonCodec(IOPlan.class).fromJson((String) getOnlyElement(result.getOnlyColumnAsSet())),
-                new IOPlan(
+                jsonCodec(IoPlan.class).fromJson((String) getOnlyElement(result.getOnlyColumnAsSet())),
+                new IoPlan(
                         ImmutableSet.of(new TableColumnInfo(
                                 new CatalogSchemaTableName(catalog, "tpch", "test_orders"),
                                 ImmutableSet.of(
@@ -195,7 +196,16 @@ public class TestHiveIntegrationSmokeTest
                                                                         new FormattedMarker(Optional.of("1"), EXACTLY)),
                                                                 new FormattedRange(
                                                                         new FormattedMarker(Optional.of("2"), EXACTLY),
-                                                                        new FormattedMarker(Optional.of("2"), EXACTLY)))))))),
+                                                                        new FormattedMarker(Optional.of("2"), EXACTLY))))),
+                                        new ColumnConstraint(
+                                                "processing",
+                                                BOOLEAN.getTypeSignature(),
+                                                new FormattedDomain(
+                                                        false,
+                                                        ImmutableSet.of(
+                                                                new FormattedRange(
+                                                                        new FormattedMarker(Optional.of("false"), EXACTLY),
+                                                                        new FormattedMarker(Optional.of("false"), EXACTLY)))))))),
                         Optional.of(new CatalogSchemaTableName(catalog, "tpch", "test_orders"))));
 
         assertUpdate("DROP TABLE test_orders");
@@ -205,8 +215,8 @@ public class TestHiveIntegrationSmokeTest
 
         result = computeActual("EXPLAIN (TYPE IO, FORMAT JSON) INSERT INTO test_orders SELECT custkey, orderkey + 10 FROM test_orders where custkey <= 10");
         assertEquals(
-                jsonCodec(IOPlan.class).fromJson((String) getOnlyElement(result.getOnlyColumnAsSet())),
-                new IOPlan(
+                jsonCodec(IoPlan.class).fromJson((String) getOnlyElement(result.getOnlyColumnAsSet())),
+                new IoPlan(
                         ImmutableSet.of(new TableColumnInfo(
                                 new CatalogSchemaTableName(catalog, "tpch", "test_orders"),
                                 ImmutableSet.of(
