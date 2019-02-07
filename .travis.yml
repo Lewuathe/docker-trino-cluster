@@ -15,7 +15,7 @@ before_install:
 
 install:
   - wget -q https://repo1.maven.org/maven2/io/prestosql/presto-server/302/presto-server-302.tar.gz
-  - cp presto-server-302.tar.gz ../presto-base
+  - cp presto-server-302.tar.gz presto-base
 
 script:
   - make
