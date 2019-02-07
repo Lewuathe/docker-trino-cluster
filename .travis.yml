@@ -18,7 +18,6 @@ install:
   - cp presto-server-302.tar.gz ../presto-base
 
 script:
-  - cd ..
   - make
 
 after_success:
