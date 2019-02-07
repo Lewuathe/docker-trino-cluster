@@ -26,11 +26,11 @@ services:
     container_name: "worker1"
     ports:
       - "8082:8081"
-  worker2:
-    build: 
-      context: ./presto-worker
-      args:
-        node_id: worker2
-    container_name: "worker2"
-    ports:
-      - "8083:8081"
+  # worker2:
+  #   build: 
+  #     context: ./presto-worker
+  #     args:
+  #       node_id: worker2
+  #   container_name: "worker2"
+  #   ports:
+  #     - "8083:8081"
