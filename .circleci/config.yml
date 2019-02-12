@@ -12,7 +12,8 @@ jobs:
       - run:
           name: Install
           command: |
-            apt-get install build-essential
+            apt-get update
+            apt-get install build-essential -y
 
       - run:
           name: Compile
@@ -35,7 +36,8 @@ jobs:
       - run:
           name: Install
           command: |
-            apt-get install build-essential          
+            apt-get update
+            apt-get install build-essential -y
 
       - run:
           name: Compile
