@@ -12,7 +12,7 @@ jobs:
           name: Install
           command: |
             apt-get update
-            apt-get install build-essential -y
+            apt-get install build-essential docker.io docker-compose -y
 
       - run:
           name: Compile
@@ -31,7 +31,7 @@ jobs:
           name: Install
           command: |
             apt-get update
-            apt-get install build-essential -y
+            apt-get install build-essential docker.io docker-compose -y
 
       - run:
           name: Compile
