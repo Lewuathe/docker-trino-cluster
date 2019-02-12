@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/docker-presto-cluster
     docker:
-      - image: ubuntu:18.04
+      - image: circleci/python:3
     steps:
       - checkout
       - setup_remote_docker      
@@ -22,7 +22,7 @@ jobs:
   deploy:
     working_directory: ~/docker-presto-cluster
     docker:
-      - image: ubuntu:18.04
+      - image: circleci/python:3
     steps:
       - checkout
       - setup_remote_docker      
