@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/docker-presto-cluster
     docker:
-      - image: openjdk:8u151
+      - image: ubuntu:18.04
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +21,7 @@ jobs:
   deploy:
     working_directory: ~/docker-presto-cluster
     docker:
-      - image: openjdk:8u151
+      - image: ubuntu:18.04
     steps:
       - checkout
       - restore_cache:
