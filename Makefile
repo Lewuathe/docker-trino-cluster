@@ -1,10 +1,17 @@
+PRESTO_VERSION := 302
+
 all:
-	docker build -t lewuathe/presto-base:latest presto-base
-	docker build -t lewuathe/presto-coordinator:latest presto-coordinator
-	docker build -t lewuathe/presto-worker:latest presto-worker
+	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-base:${PRESTO_VERSION} presto-base
+	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-coordinator:${PRESTO_VERSION} presto-coordinator
+	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-worker:${PRESTO_VERSION} presto-worker
 	docker-compose build
 
 .PHONY: test clean
+
+push:
+	docker push lewuathe/presto-base:$(PRESTO_VERSION)
+	docker push lewuathe/presto-coordinator:$(PRESTO_VERSION)
+	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
 
 run:
 	docker-compose up -d

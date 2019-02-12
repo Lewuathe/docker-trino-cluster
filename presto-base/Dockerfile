@@ -5,9 +5,10 @@
 FROM openjdk:8-slim
 MAINTAINER lewuathe
 
-ENV PRESTO_VERSION=302
+ARG VERSION
+ENV PRESTO_VERSION=${VERSION}
 ENV PRESTO_HOME=/usr/local/presto
-ENV BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
+ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
 RUN apt-get update
@@ -26,8 +27,9 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
 WORKDIR /usr/local
-ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
-# RUN wget ${BASE_URL}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
+# ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
+RUN wget -q ${BASE_URL}/io/prestosql/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
+RUN tar xvzf presto-server-${PRESTO_VERSION}.tar.gz -C /usr/local/
 RUN ln -s /usr/local/presto-server-${PRESTO_VERSION} $PRESTO_HOME
 
 ADD scripts ${PRESTO_HOME}/scripts

@@ -1,4 +1,6 @@
-FROM lewuathe/presto-base:latest
+ARG VERSION
+
+FROM lewuathe/presto-base:${VERSION}
 MAINTAINER lewuathe
 
 COPY etc /usr/local/presto/etc
