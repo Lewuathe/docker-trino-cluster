@@ -1,0 +1,53 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/docker-presto-cluster
+    docker:
+      - image: openjdk:8u151
+    steps:
+      - checkout
+      - restore_cache:
+          key: docker-presto-cluster-{{ checksum "presto-base/Dockerfile" }}
+
+      - run:
+          name: Compile
+          command: make
+
+      - save_cache:
+          paths:
+            - ~/.m2/
+          key: docker-presto-cluster-{{ checksum "presto-base/Dockerfile" }}     
+
+  deploy:
+    working_directory: ~/docker-presto-cluster
+    docker:
+      - image: openjdk:8u151
+    steps:
+      - checkout
+      - restore_cache:
+          key: docker-presto-cluster-{{ checksum "presto-base/Dockerfile" }}
+
+      - run:
+          name: Compile
+          command: make
+
+      - run:
+          name: Deploy
+          command: make push
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /[0-9]*/
+            branches:
+              ignore: /.*/

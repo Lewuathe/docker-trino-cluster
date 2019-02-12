@@ -1,5 +1,0 @@
--- delimiter: |; ignoreOrder: true;
-catalogs|
-schema_properties|
-table_properties|
-column_properties|
