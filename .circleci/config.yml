@@ -27,7 +27,7 @@ jobs:
 
       - run:
           name: Login
-          command: docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+          command: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
       - run:
           name: Deploy
