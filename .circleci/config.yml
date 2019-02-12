@@ -22,12 +22,6 @@ jobs:
       - setup_remote_docker      
 
       - run:
-          name: Install
-          command: |
-            apt-get update
-            apt-get install build-essential docker.io docker-compose -y
-
-      - run:
           name: Compile
           command: make
 
