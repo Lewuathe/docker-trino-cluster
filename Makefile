@@ -1,7 +1,7 @@
 PRESTO_VERSION  := 307
 PRESTO_SNAPSHOT_VERSION := ${PRESTO_VERSION}-SNAPSHOT
 
-all:
+build:
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-base:${PRESTO_VERSION} presto-base
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-coordinator:${PRESTO_VERSION} presto-coordinator
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-worker:${PRESTO_VERSION} presto-worker

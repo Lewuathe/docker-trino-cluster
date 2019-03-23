@@ -1,4 +1,4 @@
-# docker-presto-cluster [![Build Status](https://travis-ci.org/Lewuathe/docker-presto-cluster.svg?branch=master)](https://travis-ci.org/Lewuathe/docker-presto-cluster)
+# docker-presto-cluster [![CircleCI](https://circleci.com/gh/Lewuathe/docker-presto-cluster.svg?style=svg)](https://circleci.com/gh/Lewuathe/docker-presto-cluster)
 
 docker-presto-cluster is a simple tool for launching multiple node [Presto](https://prestosql.io/) cluster on docker container.
 The image is synched with the master branch of [presto repository](https://github.com/prestosql/presto). Therefore you can try the latest presto for developing purpose easily.

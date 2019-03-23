@@ -10,7 +10,7 @@ jobs:
 
       - run:
           name: Compile
-          command: make
+          command: make build
 
 
   deploy:
@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Compile
-          command: make
+          command: make build
 
       - run:
           name: Login
