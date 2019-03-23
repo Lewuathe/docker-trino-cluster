@@ -2,34 +2,23 @@ version: '3'
 
 services:
   coordinator:
-    build: 
-      context: ./presto-coordinator
-      args:
-        node_id: coordinator
-        VERSION: 302
+    image: lewuathe/presto-coordinator:307-SNAPSHOT
     ports:
       - "8080:8080"
     container_name: "coordinator"
-
+    command: coordinator
   worker0:
-    image: lewuathe/presto-worker:302
-    build: 
-      context: ./presto-worker
-      args:
-        node_id: worker0
-        VERSION: 302
+    image: lewuathe/presto-worker:307-SNAPSHOT
     container_name: "worker0"
     ports:
       - "8081:8081"
+    command: worker0
   worker1:
-    build: 
-      context: ./presto-worker
-      args:
-        node_id: worker1
-        VERSION: 302
+    image: lewuathe/presto-worker:307-SNAPSHOT
     container_name: "worker1"
     ports:
       - "8082:8081"
+    command: worker1
   # worker2:
   #   build: 
   #     context: ./presto-worker
