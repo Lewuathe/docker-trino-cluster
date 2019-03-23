@@ -19,11 +19,7 @@ jobs:
       - image: circleci/python:3
     steps:
       - checkout
-      - setup_remote_docker      
-
-      - run:
-          name: Compile
-          command: make build
+      - setup_remote_docker
 
       - run:
           name: Login

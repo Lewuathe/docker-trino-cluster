@@ -1,4 +1,4 @@
-PRESTO_VERSION  := 306
+PRESTO_VERSION := 306
 PRESTO_SNAPSHOT_VERSION := 307-SNAPSHOT
 
 build:
@@ -14,7 +14,7 @@ local:
 
 .PHONY: test clean
 
-push:
+push: build
 	docker push lewuathe/presto-base:$(PRESTO_VERSION)
 	docker push lewuathe/presto-coordinator:$(PRESTO_VERSION)
 	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
