@@ -19,38 +19,30 @@ $ make run
 
 ## docker-compose.yml
 
-Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the latest master branch of Presto. You can launch multiple node docker presto cluster with below yaml file. Build args `node_id` is necessary to specify `node.id` property of each node. 
+Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of Presto. Image tagged with 306 uses Presto 306. You can launch multiple node docker presto cluster with below yaml file. `command` is required to pass node id information which must be unique in a cluster.
 
 ```
 version: '3'
 
 services:
   coordinator:
-    build: 
-      context: ./presto-coordinator
-      args:
-        node_id: coordinator
+    image: lewuathe/presto-coordinator:307-SNAPSHOT
     ports:
       - "8080:8080"
     container_name: "coordinator"
-
+    command: coordinator
   worker0:
-    build: 
-      context: ./presto-worker
-      args:
-        node_id: worker0
+    image: lewuathe/presto-worker:307-SNAPSHOT
     container_name: "worker0"
     ports:
       - "8081:8081"
+    command: worker0
   worker1:
-    build: 
-      context: ./presto-worker
-      args:
-        node_id: worker1
+    image: lewuathe/presto-worker:307-SNAPSHOT
     container_name: "worker1"
     ports:
       - "8082:8081"
-
+    command: worker1
 ```
 
 Run
