@@ -7,8 +7,8 @@ The image is synched with the master branch of [presto repository](https://githu
 
 |Role|Image|Pulls|Tags|
 |:---|:---|:---:|:---:|
-|coordinator|lewuathe/presto-coordinator|![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-coordinator.svg)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-coordinator/tags)|
-|worker|lewuathe/presto-worker|![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-worker.svg)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-worker/tags)|
+|coordinator|lewuathe/presto-coordinator|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-coordinator.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/presto-coordinator)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-coordinator/tags)|
+|worker|lewuathe/presto-worker|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-worker.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/presto-worker)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-worker/tags)|
 
 # Build Image
 
