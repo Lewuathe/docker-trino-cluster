@@ -3,7 +3,7 @@
 #
 
 FROM openjdk:8-slim
-MAINTAINER lewuathe
+LABEL maintainer="lewuathe"
 
 ARG VERSION
 ENV PRESTO_VERSION=${VERSION}
