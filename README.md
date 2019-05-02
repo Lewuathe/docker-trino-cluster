@@ -3,13 +3,20 @@
 docker-presto-cluster is a simple tool for launching multiple node [Presto](https://prestosql.io/) cluster on docker container.
 The image is synched with the master branch of [presto repository](https://github.com/prestosql/presto). Therefore you can try the latest presto for developing purpose easily.
 
-## Build image
+# Images
+
+|Role|Image|Pulls|Tags|
+|:---|:---|:---:|:---:|
+|coordinator|lewuathe/presto-coordinator|![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-coordinator.svg)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-coordinator/tags)|
+|worker|lewuathe/presto-worker|![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-worker.svg)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-worker/tags)|
+
+# Build Image
 
 ```
-$ make
+$ make build
 ```
 
-## Launch presto
+# Launch presto
 
 Presto cluster can be launched by using docker-compose.
 
