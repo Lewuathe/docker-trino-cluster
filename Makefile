@@ -1,5 +1,5 @@
-PRESTO_VERSION := 309
-PRESTO_SNAPSHOT_VERSION := 310-SNAPSHOT
+PRESTO_VERSION := 310
+PRESTO_SNAPSHOT_VERSION := 311-SNAPSHOT
 
 build:
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-base:${PRESTO_VERSION} presto-base
@@ -10,7 +10,7 @@ build:
 local:
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -f presto-base/Dockerfile-dev -t lewuathe/presto-base:${PRESTO_SNAPSHOT_VERSION} presto-base
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-coordinator:${PRESTO_SNAPSHOT_VERSION} presto-coordinator
-	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION} presto-worker	
+	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION} presto-worker
 
 .PHONY: test clean
 
