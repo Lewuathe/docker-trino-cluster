@@ -20,8 +20,9 @@ push: build
 	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
 
 run:
-	docker-compose up -d
+	
+	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose up -d
 	echo "Please check http://localhost:8080"
 
 down:
-	docker-compose down
+	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose down
