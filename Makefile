@@ -1,5 +1,5 @@
-PRESTO_VERSION := 311
-PRESTO_SNAPSHOT_VERSION := 312-SNAPSHOT
+PRESTO_VERSION := 317
+PRESTO_SNAPSHOT_VERSION := 318-SNAPSHOT
 
 build:
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-base:${PRESTO_VERSION} presto-base
@@ -20,7 +20,6 @@ push: build
 	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
 
 run:
-	
 	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose up -d
 	echo "Please check http://localhost:8080"
 
