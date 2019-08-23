@@ -16,9 +16,17 @@ The image is synched with the master branch of [presto repository](https://githu
 $ make build
 ```
 
+# Local Image
+
+You may want to build the Presto with your own build package for the development of Presto itself.
+
+```
+$ make local
+```
+
 # Launch presto
 
-Presto cluster can be launched by using docker-compose.
+Presto cluster can be launched by using docker-compose. Images built previously is used for the cluster.
 
 ```
 $ make run
