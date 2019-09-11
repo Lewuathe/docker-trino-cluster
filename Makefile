@@ -14,10 +14,11 @@ local:
 
 .PHONY: test clean
 
-push: build
+push:
 	docker push lewuathe/presto-base:$(PRESTO_VERSION)
 	docker push lewuathe/presto-coordinator:$(PRESTO_VERSION)
 	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
+	sh ./update-readme.sh
 
 run:
 	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose up -d
