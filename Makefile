@@ -1,6 +1,8 @@
 PRESTO_VERSION := 318
 PRESTO_SNAPSHOT_VERSION := 319-SNAPSHOT
 
+.PHONY: build local push run down release
+
 build:
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-base:${PRESTO_VERSION} presto-base
 	docker build --build-arg VERSION=${PRESTO_VERSION} -t lewuathe/presto-coordinator:${PRESTO_VERSION} presto-coordinator
@@ -11,8 +13,6 @@ local:
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -f presto-base/Dockerfile-dev -t lewuathe/presto-base:${PRESTO_SNAPSHOT_VERSION} presto-base
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-coordinator:${PRESTO_SNAPSHOT_VERSION} presto-coordinator
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION} presto-worker
-
-.PHONY: test clean
 
 push:
 	docker push lewuathe/presto-base:$(PRESTO_VERSION)
@@ -26,3 +26,7 @@ run:
 
 down:
 	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose down
+
+release:
+	git tag -a ${PRESTO_VERSION} -m "Release ${PRESTO_VERSION}"
+	git push --tags
