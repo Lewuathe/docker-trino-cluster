@@ -14,7 +14,7 @@ local:
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-coordinator:${PRESTO_SNAPSHOT_VERSION} presto-coordinator
 	docker build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION} presto-worker
 
-push:
+push: build
 	docker push lewuathe/presto-base:$(PRESTO_VERSION)
 	docker push lewuathe/presto-coordinator:$(PRESTO_VERSION)
 	docker push lewuathe/presto-worker:$(PRESTO_VERSION)
