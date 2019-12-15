@@ -16,9 +16,9 @@ local:
 
 # Experimental
 aarch64:
-	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -f presto-base/Dockerfile-aarch64 -t lewuathe/presto-base:${PRESTO_SNAPSHOT_VERSION} presto-base --push
-	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -t lewuathe/presto-coordinator:${PRESTO_SNAPSHOT_VERSION} presto-coordinator --push
-	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION} presto-worker --push
+	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -f presto-base/Dockerfile-aarch64 -t lewuathe/presto-base:${PRESTO_SNAPSHOT_VERSION}-aarch64 presto-base --push
+	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -t lewuathe/presto-coordinator:${PRESTO_SNAPSHOT_VERSION}-aarch64 presto-coordinator --push
+	docker buildx build --build-arg VERSION=${PRESTO_SNAPSHOT_VERSION} --platform linux/arm64 -t lewuathe/presto-worker:${PRESTO_SNAPSHOT_VERSION}-aarch64 presto-worker --push
 
 push: build
 	docker push lewuathe/presto-base:$(PRESTO_VERSION)
