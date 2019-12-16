@@ -2,7 +2,7 @@
 # This docker image is for launching test purpose presto cluster.
 #
 
-FROM arm64v8/openjdk:11
+FROM amazoncorretto:11
 MAINTAINER lewuathe
 
 ARG VERSION
@@ -11,8 +11,8 @@ ENV PRESTO_HOME=/usr/local/presto
 ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
-RUN apt-get update
-RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential
+RUN yum update -y
+RUN yum install -y curl tar sudo rsync python wget python-pip python-dev build-essential
 RUN pip install jinja2
 
 ENV JAVA_HOME /usr/java/default
