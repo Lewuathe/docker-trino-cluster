@@ -18,15 +18,17 @@ def render(vars, files):
     # Remove *.template
     with open(path[:-9], 'w') as f:
       f.write(rendered)
-      print("Rendered {}".format(path[:-9]))  
+      print("Rendered {}".format(path[:-9]))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description="Process build args from Docker")
   parser.add_argument('files', help='File to be rendered', nargs='*')
   parser.add_argument('--node-id', help='Node ID', dest='node_id')
+  parser.add_argument('--discovery-uri', help='Coordinator Hostname', dest='discovery_uri')
   args = parser.parse_args()
 
   vars = {
     'node_id': args.node_id,
+    'discovery_uri': args.discovery_uri
   }
   render(vars, args.files)
