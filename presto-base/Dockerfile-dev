@@ -12,7 +12,7 @@ ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
 RUN apt-get update
-RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential
+RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential uuid-runtime
 RUN pip install jinja2
 
 ENV JAVA_HOME /usr/java/default
