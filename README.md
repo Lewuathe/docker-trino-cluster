@@ -34,30 +34,31 @@ $ make run
 
 ## docker-compose.yml
 
-Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of Presto. Image tagged with 306 uses Presto 306. You can launch multiple node docker presto cluster with below yaml file. `command` is required to pass node id information which must be unique in a cluster.
+Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of Presto. Image tagged with 306 uses Presto 306. You can launch multiple node docker presto cluster with below yaml file. `command` is required to pass discovery URI and node id information which must be unique in a cluster. If node ID is not passed, the UUID is generated automatically at launch time.
 
-```Dockerfile
+```yaml
 version: '3'
 
 services:
   coordinator:
-    image: lewuathe/presto-coordinator:309
+    image: "lewuathe/presto-coordinator:${PRESTO_VERSION}"
     ports:
       - "8080:8080"
     container_name: "coordinator"
-    command: coordinator
+    command: http://coordinator:8080 coordinator
   worker0:
-    image: lewuathe/presto-worker:309
+    image: "lewuathe/presto-worker:${PRESTO_VERSION}"
     container_name: "worker0"
     ports:
       - "8081:8081"
-    command: worker0
+    command: http://coordinator:8080 worker0
   worker1:
-    image: lewuathe/presto-worker:309
+    image: "lewuathe/presto-worker:${PRESTO_VERSION}"
     container_name: "worker1"
     ports:
       - "8082:8081"
-    command: worker1
+    command: http://coordinator:8080 worker1
+
 ```
 
 Run
@@ -65,6 +66,23 @@ Run
 ```
 $ docker-compose up -d
 ```
+
+# Terraform
+
+You can launch Presto cluster on AWS Fargate by using [`terraform-aws-presto` module](https://github.com/Lewuathe/terraform-aws-presto). The following Terraform configuration provides a Presto cluster with 2 worker processes on Fargate.
+
+```
+module "presto" {
+  source           = "github.com/Lewuathe/terraform-aws-presto"
+  cluster_capacity = 2
+}
+
+output "alb_dns_name" {
+  value = module.presto.alb_dns_name
+}
+```
+
+Please see [here](https://github.com/Lewuathe/terraform-aws-presto) for more detail.
 
 # LICENSE
 

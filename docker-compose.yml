@@ -18,4 +18,4 @@ services:
     container_name: "worker1"
     ports:
       - "8082:8081"
-    command: http://coordinator:8080 worker0
+    command: http://coordinator:8080 worker1
