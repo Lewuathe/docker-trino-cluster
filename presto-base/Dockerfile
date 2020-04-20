@@ -2,7 +2,7 @@
 # This docker image is for launching test purpose presto cluster.
 #
 
-FROM openjdk:8-slim
+FROM openjdk:11-slim
 LABEL maintainer="lewuathe"
 
 ARG VERSION
