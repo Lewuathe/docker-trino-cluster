@@ -1,7 +1,7 @@
 ARG VERSION
 
 FROM lewuathe/presto-base:${VERSION}
-MAINTAINER lewuathe
+LABEL maintainer="lewuathe"
 
 ADD etc /usr/local/presto/etc
 
