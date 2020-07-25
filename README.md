@@ -17,6 +17,7 @@ The image is synched with the master branch of [presto repository](https://githu
 
 - Multiple node cluster on docker container with docker-compose
 - Distribution of pre-build Presto docker images
+- Override the catalog properties with custom one
 - Terraform module to launch ECS based cluster
 
 # Images
@@ -92,6 +93,22 @@ The version can be specified as the environment variable.
 
 ```
 $ PRESTO_VERSION=330-SNAPSHOT docker-compose up
+```
+
+# Custom Catalogs
+
+While the image provides several default connectors (i.e. JMX, Memory, TPC-H and TPC-DS), you may want to override the catalog property with your own ones. That can be easily achieved by mounting the catalog directory onto `/usr/local/presto/etc/catalog`. Please look at [`volumes`](https://docs.docker.com/compose/compose-file/#volumes) configuration for docker-compose.
+
+```yaml
+services:
+  coordinator:
+    image: "lewuathe/presto-coordinator:${PRESTO_VERSION}"
+    ports:
+      - "8080:8080"
+    container_name: "coordinator"
+    command: http://coordinator:8080 coordinator
+    volumes:
+      - ./example/etc/catalog:/usr/local/presto/etc/catalog
 ```
 
 # Terraform
