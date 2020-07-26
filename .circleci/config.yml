@@ -26,9 +26,9 @@ jobs:
           name: Compile for x86
           command: make build
 
-      - run:
-          name: Compile for ARM
-          command: make arm64v8
+      # - run:
+      #     name: Compile for ARM
+      #     command: make arm64v8
 
 
   deploy:
