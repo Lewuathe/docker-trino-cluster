@@ -6,11 +6,29 @@ jobs:
       - image: circleci/python:3
     steps:
       - checkout
-      - setup_remote_docker      
+      - setup_remote_docker:
+          version: 18.09.3
 
       - run:
-          name: Compile
+          name: Setup Docker BuildKit
+          command: |
+            sudo apt-get update
+            sudo apt-get install make curl qemu-user -y
+            mkdir -vp ~/.docker/cli-plugins/
+            curl --silent -L --output ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-amd64
+            chmod a+x ~/.docker/cli-plugins/docker-buildx
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker context create mybuilder
+            docker buildx create mybuilder --driver docker-container --use
+            docker buildx inspect --bootstrap
+
+      - run:
+          name: Compile for x86
           command: make build
+
+      - run:
+          name: Compile for ARM
+          command: make arm64v8
 
 
   deploy:
@@ -19,7 +37,20 @@ jobs:
       - image: circleci/python:3
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 18.09.3
+      - run:
+          name: Setup Docker BuildKit
+          command: |
+            sudo apt-get update
+            sudo apt-get install make curl qemu-user -y
+            mkdir -vp ~/.docker/cli-plugins/
+            curl --silent -L --output ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-amd64
+            chmod a+x ~/.docker/cli-plugins/docker-buildx
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker context create mybuilder
+            docker buildx create mybuilder --driver docker-container --use
+            docker buildx inspect --bootstrap
 
       - run:
           name: Login
