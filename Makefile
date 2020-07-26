@@ -19,13 +19,13 @@ snapshot:
 # Experimental
 arm64v8:
 	docker buildx build --build-arg VERSION=${PRESTO_VERSION} --platform linux/arm64/v8 -f presto-base/Dockerfile-aarch64 -t lewuathe/presto-base:${PRESTO_VERSION}-arm64v8 presto-base
-	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-aarch64 --platform linux/arm64/v8 -t lewuathe/presto-coordinator:${PRESTO_VERSION}-arm64v8 presto-coordinator
-	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-aarch64 --platform linux/arm64/v8 -t lewuathe/presto-worker:${PRESTO_VERSION}-aarch64 presto-worker
+	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/presto-coordinator:${PRESTO_VERSION}-arm64v8 presto-coordinator
+	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/presto-worker:${PRESTO_VERSION}-aarch64 presto-worker
 
 push_arm64v8:
 	docker buildx build --build-arg VERSION=${PRESTO_VERSION} --platform linux/arm64/v8 -f presto-base/Dockerfile-aarch64 -t lewuathe/presto-base:${PRESTO_VERSION}-arm64v8 presto-base --push
-	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-aarch64 --platform linux/arm64/v8 -t lewuathe/presto-coordinator:${PRESTO_VERSION}-arm64v8 presto-coordinator --push
-	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-aarch64 --platform linux/arm64/v8 -t lewuathe/presto-worker:${PRESTO_VERSION}-arm64v8 presto-worker --push
+	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/presto-coordinator:${PRESTO_VERSION}-arm64v8 presto-coordinator --push
+	docker buildx build --build-arg VERSION=${PRESTO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/presto-worker:${PRESTO_VERSION}-arm64v8 presto-worker --push
 
 # Experimental
 corretto:
