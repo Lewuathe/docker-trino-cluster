@@ -27,6 +27,11 @@ The image is synched with the master branch of [presto repository](https://githu
 |coordinator|lewuathe/presto-coordinator|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-coordinator.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/presto-coordinator)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-coordinator/tags)|
 |worker|lewuathe/presto-worker|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/presto-worker.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/presto-worker)|[tags](https://cloud.docker.com/repository/docker/lewuathe/presto-worker/tags)|
 
+We are also providing ARM based images. Images for ARM have suffix `-arm64v8` in the tag. For instance, the image of 336 has two types of images supporting multi-architectures. Following architectures are supported for now.
+
+- `linux/amd64`
+- `linux/arm64/v8`
+
 # Usage
 
 Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of Presto. Image tagged with 306 uses Presto 306 inside. Each docker image gets two arguments
