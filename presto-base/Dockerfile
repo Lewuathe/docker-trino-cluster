@@ -26,6 +26,12 @@ RUN pip install jinja2
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
+# Add presto-cli
+WORKDIR /usr/local/bin
+RUN wget -q ${BASE_URL}/io/prestosql/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar
+RUN chmod +x presto-cli-${PRESTO_VERSION}-executable.jar
+RUN mv presto-cli-${PRESTO_VERSION}-executable.jar presto-cli
+
 WORKDIR /usr/local
 # ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
 RUN wget -q ${BASE_URL}/io/prestosql/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
