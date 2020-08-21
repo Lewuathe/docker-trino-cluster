@@ -43,6 +43,9 @@ run:
 	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose up -d
 	echo "Please check http://localhost:8080"
 
+test: run
+	./test-container.sh $(PRESTO_VERSION)
+
 down:
 	PRESTO_VERSION=$(PRESTO_VERSION) docker-compose down
 
