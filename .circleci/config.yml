@@ -59,6 +59,10 @@ jobs:
           name: Deploy
           command: make push
 
+      - run:
+          name: Update README
+          command: ./update-readme.sh
+
 workflows:
   version: 2
   build_and_deploy:
