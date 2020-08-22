@@ -30,6 +30,15 @@ jobs:
           name: Test
           command: make test
 
+  update_readme:
+    working_directory: ~/docker-presto-cluster
+    docker:
+      - image: circleci/python:3
+    steps:
+      - run:
+          name: Update README
+          command: ./update-readme.sh
+
   deploy:
     working_directory: ~/docker-presto-cluster
     docker:
@@ -59,9 +68,6 @@ jobs:
           name: Deploy
           command: make push
 
-      - run:
-          name: Update README
-          command: ./update-readme.sh
 
 workflows:
   version: 2
@@ -71,6 +77,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - update_readme:
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - build
