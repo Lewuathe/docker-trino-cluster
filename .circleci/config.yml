@@ -26,10 +26,9 @@ jobs:
           name: Compile for x86
           command: make build
 
-      # - run:
-      #     name: Compile for ARM
-      #     command: make arm64v8
-
+      - run:
+          name: Test
+          command: make test
 
   deploy:
     working_directory: ~/docker-presto-cluster
