@@ -1,4 +1,4 @@
-PRESTO_VERSION := 340 
+PRESTO_VERSION := 340
 PRESTO_SNAPSHOT_VERSION := 341-SNAPSHOT
 
 .PHONY: build local push run down release
