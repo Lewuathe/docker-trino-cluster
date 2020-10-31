@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  coordinator:
+    image: "lewuathe/presto-coordinator:${PRESTO_VERSION}"
+    ports:
+      - "8080:8080"
+    container_name: "coordinator"
+    command: http://localhost:8080 coordinator
+    volumes:
+      - ./etc/catalog:/usr/local/presto/etc/catalog
+  worker0:
+    image: "lewuathe/presto-worker:${PRESTO_VERSION}"
+    container_name: "worker0"
+    ports:
+      - "8081:8081"
+    command: http://coordinator:8080 worker0
+    volumes:
+      - ./etc/catalog:/usr/local/presto/etc/catalog
+  kudu:
+    image: "apache/kudu"
+    container_name: kudu
+    ports:
+      - "7051:7051"
+    command: master
+  kudu-tserver:
+    image: "apache/kudu"
+    depends_on:
+      - kudu
+    ports:
+      - "7050"
+      - "8050"
+    command: ["tserver"]
+    environment:
+      - KUDU_MASTERS=kudu
+    deploy:
+      replicas: 3
