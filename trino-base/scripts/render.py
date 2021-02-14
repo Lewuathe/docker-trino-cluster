@@ -11,7 +11,7 @@ def render(vars, files):
   :return:
   '''
   for path in files:
-    env = Environment(loader=FileSystemLoader('/usr/local/presto/', encoding='utf8'))
+    env = Environment(loader=FileSystemLoader('/usr/local/trino/', encoding='utf8'))
     tpl = env.get_template(path)
     rendered = tpl.render(vars)
 

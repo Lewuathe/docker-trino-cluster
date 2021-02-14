@@ -1,0 +1,31 @@
+#
+# This docker image is for launching test purpose trino cluster.
+#
+
+FROM arm64v8/openjdk:11
+MAINTAINER lewuathe
+
+ARG VERSION
+ENV trino_VERSION=${VERSION}
+ENV trino_HOME=/usr/local/trino
+ENV BASE_URL=https://repo1.maven.org/maven2
+
+# install dev tools
+RUN apt-get update
+RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential
+RUN pip install jinja2
+
+ENV JAVA_HOME /usr/java/default
+ENV PATH $PATH:$JAVA_HOME/bin
+
+WORKDIR /usr/local
+#ADD trino-server-${trino_VERSION}.tar.gz /usr/local
+RUN wget -q ${BASE_URL}/io/trinosql/trino-server/${trino_VERSION}/trino-server-${trino_VERSION}.tar.gz
+RUN tar xvzf trino-server-${trino_VERSION}.tar.gz -C /usr/local/
+RUN ln -s /usr/local/trino-server-${trino_VERSION} $trino_HOME
+
+ADD scripts ${trino_HOME}/scripts
+
+# Create data dir
+RUN mkdir -p $trino_HOME/data
+VOLUME ["$trino_HOME/data"]

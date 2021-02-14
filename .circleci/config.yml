@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/docker-presto-cluster
+    working_directory: ~/docker-trino-cluster
     docker:
       - image: circleci/python:3
     steps:
@@ -31,7 +31,7 @@ jobs:
           command: make test
 
   update_readme:
-    working_directory: ~/docker-presto-cluster
+    working_directory: ~/docker-trino-cluster
     docker:
       - image: circleci/python:3
     steps:
@@ -43,7 +43,7 @@ jobs:
           command: ./update-readme.sh
 
   deploy:
-    working_directory: ~/docker-presto-cluster
+    working_directory: ~/docker-trino-cluster
     docker:
       - image: circleci/python:3
     steps:
