@@ -16,8 +16,7 @@ function test_container {
 
     set +e
     I=0
-    until RESULT=$(docker-compose exec coordinator /usr/local/bin/trino-cli --execute "SELECT 'success'" | tr -d
-); do
+    until RESULT=$(docker-compose exec coordinator /usr/local/bin/trino-cli --execute "SELECT 'success'" | tr -d ); do
         if [[ $((I++)) -ge ${QUERY_RETRIES} ]]; then
             echo "Too many retries waiting for Trino to start."
             break
