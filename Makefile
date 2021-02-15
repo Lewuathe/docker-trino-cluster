@@ -39,7 +39,7 @@ push: build push_arm64v8
 	docker push lewuathe/trino-worker:$(TRINO_VERSION)
 	sh ./update-readme.sh
 
-run:
+run: build
 	TRINO_VERSION=$(TRINO_VERSION) docker-compose up -d
 	echo "Please check http://localhost:8080"
 
