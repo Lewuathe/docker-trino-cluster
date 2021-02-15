@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 function cleanup {
-    TRINO_VERSION=$1 docker-compose down
+    docker-compose down
 }
 
 function test_container {
@@ -18,7 +18,7 @@ function test_container {
     I=0
     until RESULT=$(docker-compose exec coordinator /usr/local/bin/trino-cli --execute "SELECT 'success'" | tr -d ); do
         if [[ $((I++)) -ge ${QUERY_RETRIES} ]]; then
-            echo "Too many retries waiting for Trino to start."
+            echo "Too many retries waiting for Presto to start."
             break
         fi
         sleep ${QUERY_PERIOD}
