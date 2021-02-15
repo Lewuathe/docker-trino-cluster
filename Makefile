@@ -43,7 +43,7 @@ run: build
 	TRINO_VERSION=$(TRINO_VERSION) docker-compose up -d
 	echo "Please check http://localhost:8080"
 
-test: run
+test:
 	./test-container.sh $(TRINO_VERSION)
 
 down:
