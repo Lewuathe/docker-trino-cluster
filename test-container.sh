@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 function cleanup {
-    docker-compose down
+    TRINO_VERSION=$1 docker-compose down
 }
 
 function test_container {
