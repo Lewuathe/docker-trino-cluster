@@ -2,21 +2,21 @@ version: '3'
 
 services:
   coordinator:
-    image: "lewuathe/presto-coordinator:${PRESTO_VERSION}"
+    image: "lewuathe/trino-coordinator:${trino_VERSION}"
     ports:
       - "8080:8080"
     container_name: "coordinator"
     command: http://localhost:8080 coordinator
     volumes:
-      - ./etc/catalog:/usr/local/presto/etc/catalog
+      - ./etc/catalog:/usr/local/trino/etc/catalog
   worker0:
-    image: "lewuathe/presto-worker:${PRESTO_VERSION}"
+    image: "lewuathe/trino-worker:${trino_VERSION}"
     container_name: "worker0"
     ports:
       - "8081:8081"
     command: http://coordinator:8080 worker0
     volumes:
-      - ./etc/catalog:/usr/local/presto/etc/catalog
+      - ./etc/catalog:/usr/local/trino/etc/catalog
   kudu:
     image: "apache/kudu"
     container_name: kudu

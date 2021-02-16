@@ -1,13 +1,13 @@
 #
-# This docker image is for launching test purpose presto cluster.
+# This docker image is for launching test purpose trino cluster.
 #
 
 FROM openjdk:11-slim
 LABEL maintainer="lewuathe"
 
 ARG VERSION
-ENV PRESTO_VERSION=${VERSION}
-ENV PRESTO_HOME=/usr/local/presto
+ENV TRINO_VERSION=${VERSION}
+ENV TRINO_HOME=/usr/local/trino
 ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
@@ -24,7 +24,7 @@ RUN apt-get install -y \
     build-essential \
     uuid-runtime \
     less
-    
+
 RUN pip install jinja2
 
 # java
@@ -38,20 +38,20 @@ RUN pip install jinja2
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
-# Add presto-cli
+# Add trino-cli
 WORKDIR /usr/local/bin
-RUN wget -q ${BASE_URL}/io/prestosql/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar
-RUN chmod +x presto-cli-${PRESTO_VERSION}-executable.jar
-RUN mv presto-cli-${PRESTO_VERSION}-executable.jar presto-cli
+RUN wget -q ${BASE_URL}/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar
+RUN chmod +x trino-cli-${TRINO_VERSION}-executable.jar
+RUN mv trino-cli-${TRINO_VERSION}-executable.jar trino-cli
 
 WORKDIR /usr/local
-# ADD presto-server-${PRESTO_VERSION}.tar.gz /usr/local
-RUN wget -q ${BASE_URL}/io/prestosql/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz
-RUN tar xvzf presto-server-${PRESTO_VERSION}.tar.gz -C /usr/local/
-RUN ln -s /usr/local/presto-server-${PRESTO_VERSION} $PRESTO_HOME
+# ADD trino-server-${TRINO_VERSION}.tar.gz /usr/local
+RUN wget -q ${BASE_URL}/io/trino/trino-server/${TRINO_VERSION}/trino-server-${TRINO_VERSION}.tar.gz
+RUN tar xvzf trino-server-${TRINO_VERSION}.tar.gz -C /usr/local/
+RUN ln -s /usr/local/trino-server-${TRINO_VERSION} $TRINO_HOME
 
-ADD scripts ${PRESTO_HOME}/scripts
+ADD scripts ${TRINO_HOME}/scripts
 
 # Create data dir
-RUN mkdir -p $PRESTO_HOME/data
-VOLUME ["$PRESTO_HOME/data"]
+RUN mkdir -p $TRINO_HOME/data
+VOLUME ["$TRINO_HOME/data"]

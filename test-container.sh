@@ -12,11 +12,11 @@ function test_container {
 
     trap cleanup EXIT
 
-    PRESTO_VERSION=$1 docker-compose up -d
+    TRINO_VERSION=$1 docker-compose up -d
 
     set +e
     I=0
-    until RESULT=$(docker-compose exec coordinator /usr/local/bin/presto-cli --execute "SELECT 'success'" | tr -d ); do
+    until RESULT=$(docker-compose exec coordinator /usr/local/bin/trino-cli --execute "SELECT 'success'" | tr -d ); do
         if [[ $((I++)) -ge ${QUERY_RETRIES} ]]; then
             echo "Too many retries waiting for Presto to start."
             break
