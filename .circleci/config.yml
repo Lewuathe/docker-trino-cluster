@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.3
+          version: 20.10.2
       - run:
           name: Update README
           command: ./update-readme.sh
@@ -53,7 +53,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.3
+          version: 20.10.2
       - run:
           name: Setup Docker BuildKit
           command: |
