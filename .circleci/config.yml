@@ -27,6 +27,10 @@ jobs:
           command: make build
 
       - run:
+          name: Compile for Arm64v8
+          command: make arm64v8
+
+      - run:
           name: Test
           command: make test
 
