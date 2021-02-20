@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.3
+          version: 20.10.2
 
       - run:
           name: Setup Docker BuildKit
@@ -27,6 +27,10 @@ jobs:
           command: make build
 
       - run:
+          name: Compile for Arm64v8
+          command: make arm64v8
+
+      - run:
           name: Test
           command: make test
 
@@ -37,7 +41,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.3
+          version: 20.10.2
       - run:
           name: Update README
           command: ./update-readme.sh
@@ -49,7 +53,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.3
+          version: 20.10.2
       - run:
           name: Setup Docker BuildKit
           command: |
