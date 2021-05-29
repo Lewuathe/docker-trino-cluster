@@ -19,9 +19,9 @@ snapshot:
 # Experimental
 arm64v8:
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-	docker buildx build --build-arg VERSION=${TRINO_VERSION} --platform linux/arm64/v8 -f trino-base/Dockerfile-aarch64 -t lewuathe/trino-base:${TRINO_VERSION}-arm64v8 trino-base
-	docker buildx build --build-arg VERSION=${TRINO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/trino-coordinator:${TRINO_VERSION}-arm64v8 trino-coordinator
-	docker buildx build --build-arg VERSION=${TRINO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/trino-worker:${TRINO_VERSION}-aarch64 trino-worker
+	docker buildx build --build-arg VERSION=${TRINO_VERSION} --platform linux/arm64/v8 -f trino-base/Dockerfile-aarch64 -t lewuathe/trino-base:${TRINO_VERSION}-arm64v8 trino-base --load
+	docker buildx build --build-arg VERSION=${TRINO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/trino-coordinator:${TRINO_VERSION}-arm64v8 trino-coordinator --load
+	docker buildx build --build-arg VERSION=${TRINO_VERSION}-arm64v8 --platform linux/arm64/v8 -t lewuathe/trino-worker:${TRINO_VERSION}-aarch64 trino-worker --load
 
 push_arm64v8:
 	docker buildx build --build-arg VERSION=${TRINO_VERSION} --platform linux/arm64/v8 -f trino-base/Dockerfile-aarch64 -t lewuathe/trino-base:${TRINO_VERSION}-arm64v8 trino-base --push
