@@ -19,7 +19,7 @@ RUN apt-get install -y \
     rsync \
     python \
     wget \
-    python-pip \
+    python3-pip \
     python-dev \
     build-essential \
     uuid-runtime \
