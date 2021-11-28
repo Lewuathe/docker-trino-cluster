@@ -5,14 +5,15 @@
 FROM openjdk:11-slim
 LABEL maintainer="lewuathe"
 
-ARG VERSION
+ARG VERSION=355
+ARG BASE_URL=https://repo1.maven.org/maven2
 ENV TRINO_VERSION=${VERSION}
 ENV TRINO_HOME=/usr/local/trino
-ENV BASE_URL=https://repo1.maven.org/maven2
+ENV BASE_URL=${BASE_URL}
 
 # install dev tools
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
     curl \
     tar \
     sudo \
@@ -23,9 +24,9 @@ RUN apt-get install -y \
     python-dev \
     build-essential \
     uuid-runtime \
-    less
-
-RUN pip install jinja2
+    less && \
+    pip install jinja2 && \
+    apt-get purge -y
 
 # java
 # RUN mkdir -p /usr/java/default && \
@@ -38,20 +39,17 @@ RUN pip install jinja2
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
-# Add trino-cli
-WORKDIR /usr/local/bin
-RUN wget -q ${BASE_URL}/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar
-RUN chmod +x trino-cli-${TRINO_VERSION}-executable.jar
-RUN mv trino-cli-${TRINO_VERSION}-executable.jar trino-cli
 
 WORKDIR /usr/local
-# ADD trino-server-${TRINO_VERSION}.tar.gz /usr/local
-RUN wget -q ${BASE_URL}/io/trino/trino-server/${TRINO_VERSION}/trino-server-${TRINO_VERSION}.tar.gz
-RUN tar xvzf trino-server-${TRINO_VERSION}.tar.gz -C /usr/local/
-RUN ln -s /usr/local/trino-server-${TRINO_VERSION} $TRINO_HOME
+RUN \
+    wget -q -O bin/trino-cli ${BASE_URL}/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar && \
+    chmod +x bin/trino-cli && \
+    wget -q ${BASE_URL}/io/trino/trino-server/${TRINO_VERSION}/trino-server-${TRINO_VERSION}.tar.gz && \
+    tar -xvzf trino-server-${TRINO_VERSION}.tar.gz -C /usr/local/ && \
+    ln -s /usr/local/trino-server-${TRINO_VERSION} $TRINO_HOME && \
+    mkdir -p $TRINO_HOME/data && \
+    rm -f trino-server-${TRINO_VERSION}.tar.gz
 
 ADD scripts ${TRINO_HOME}/scripts
 
-# Create data dir
-RUN mkdir -p $TRINO_HOME/data
 VOLUME ["$TRINO_HOME/data"]

@@ -5,23 +5,24 @@
 FROM amazoncorretto:11
 MAINTAINER lewuathe
 
-ARG VERSION
+ARG VERSION=355
+ARG BASE_URL=https://repo1.maven.org/maven2
 ENV trino_VERSION=${VERSION}
 ENV trino_HOME=/usr/local/trino
-ENV BASE_URL=https://repo1.maven.org/maven2
+ENV BASE_URL=${BASE_URL}
 
 # install dev tools
-RUN yum update -y
-RUN yum install -y curl tar sudo rsync python wget python-pip python-dev build-essential
-RUN pip install jinja2
+RUN yum update -y && yum install -y curl tar sudo rsync python wget python-pip python-dev build-essential && pip install jinja2
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
 WORKDIR /usr/local
 ADD trino-server-${trino_VERSION}.tar.gz /usr/local
-#RUN tar xvzf trino-server-${trino_VERSION}.tar.gz -C /usr/local/
-RUN ln -s /usr/local/trino-server-${trino_VERSION} $trino_HOME
+RUN \
+    tar -xvzf trino-server-${trino_VERSION}.tar.gz -C /usr/local/ && \
+    ln -s /usr/local/trino-server-${trino_VERSION} $trino_HOME && \
+    rm -f trino-server-${trino_VERSION}.tar.gz
 
 ADD scripts ${trino_HOME}/scripts
 
