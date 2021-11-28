@@ -11,22 +11,22 @@ ENV TRINO_HOME=/usr/local/trino
 ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
-RUN apt-get update
-RUN apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential uuid-runtime
-RUN pip install jinja2
+RUN apt-get update && apt-get install -y curl tar sudo rsync python wget python-pip python-dev build-essential uuid-runtime && pip install jinja2
 
 ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 
-WORKDIR /usr/local/bin
+WORKDIR /usr/local/
 ADD trino-cli-${TRINO_VERSION}-executable.jar /usr/local/bin
-RUN chmod +x trino-cli-${TRINO_VERSION}-executable.jar
-RUN mv trino-cli-${TRINO_VERSION}-executable.jar trino-cli
-
-WORKDIR /usr/local
 ADD trino-server-${TRINO_VERSION}.tar.gz /usr/local
-#RUN tar xvzf trino-server-${TRINO_VERSION}.tar.gz -C /usr/local/
-RUN ln -s /usr/local/trino-server-${TRINO_VERSION} $TRINO_HOME
+RUN 
+
+RUN \
+    mv bin/trino-cli-${TRINO_VERSION}-executable.jar bin/trino-cli && \
+    chmod +x bin/trino-cli.jar && \
+    tar -xvzf trino-server-${TRINO_VERSION}.tar.gz -C /usr/local/ && \
+    ln -s /usr/local/trino-server-${TRINO_VERSION} $TRINO_HOME && \
+    rm -f trino-server-${TRINO_VERSION}.tar.gz
 
 ADD scripts ${TRINO_HOME}/scripts
 

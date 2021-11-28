@@ -3,14 +3,17 @@
 docker-trino-cluster is a simple tool for launching multiple node [trino](https://trinosql.io/) cluster on docker container.
 The image is synched with the master branch of [trino repository](https://github.com/trinosql/trino). Therefore you can try the latest trino for developing purpose easily.
 
+- [docker-trino-cluster ![CircleCI](https://circleci.com/gh/Lewuathe/docker-trino-cluster) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Lewuathe/docker-trino-cluster) ![GitHub](https://img.shields.io/github/license/Lewuathe/docker-trino-cluster)](#docker-trino-cluster---)
 - [Features](#features)
 - [Images](#images)
 - [Usage](#usage)
-  * [docker-compose.yml](#docker-composeyml)
+  - [docker-compose.yml](#docker-composeyml)
+- [Custom Catalogs](#custom-catalogs)
 - [Terraform](#terraform)
 - [Development](#development)
-  * [Build Image](#build-image)
-  * [Snapshot Image](#snapshot-image)
+  - [Build Image](#build-image)
+    - [Build with](#build-with)
+  - [Snapshot Image](#snapshot-image)
 - [LICENSE](#license)
 
 # Features
@@ -149,6 +152,14 @@ You may want to build the trino with your own build package for the development 
 ```
 $ cp /path/to/trino/trino-server/target/trino-server-330-SNAPSHOT.tar.gz /path/to/docker-trino-cluster/trino-base/
 $ make snapshot
+```
+
+## Build with environment variables
+
+You can specify `version` and/or maven repository url when you execute `make build`, like the following:
+
+```shell
+VERSION=364 BASE_URL=https://repo1.maven.org/maven2 make build
 ```
 
 # LICENSE
