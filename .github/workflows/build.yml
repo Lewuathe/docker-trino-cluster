@@ -1,11 +1,12 @@
 name: build
 
 on:
-  push:
-    branches: [dev]
-  pull_request:
-    branches: [main]
-    types: [opened]
+  workflow_dispatch:
+      push:
+        branches: [actions_test]
+      pull_request:
+        branches: [main]
+        types: [opened]
 
 jobs:
   docker:
