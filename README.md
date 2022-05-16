@@ -1,4 +1,4 @@
-# docker-trino-cluster [![CircleCI](https://circleci.com/gh/Lewuathe/docker-trino-cluster.svg?style=svg)](https://circleci.com/gh/Lewuathe/docker-trino-cluster) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Lewuathe/docker-trino-cluster) ![GitHub](https://img.shields.io/github/license/Lewuathe/docker-trino-cluster)
+# docker-trino-cluster [![CircleCI](https://circleci.com/gh/satyakommula/docker-trino-cluster.svg?style=svg)](https://circleci.com/gh/satyakommula/docker-trino-cluster) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/satyakommula/docker-trino-cluster) ![GitHub](https://img.shields.io/github/license/satyakommula/docker-trino-cluster)
 
 docker-trino-cluster is a simple tool for launching multiple node [trino](https://trinosql.io/) cluster on docker container.
 The image is synched with the master branch of [trino repository](https://github.com/trinosql/trino). Therefore you can try the latest trino for developing purpose easily.
@@ -24,8 +24,8 @@ The image is synched with the master branch of [trino repository](https://github
 
 |Role|Image|Pulls|Tags|
 |:---|:---|:---:|:---:|
-|coordinator|lewuathe/trino-coordinator|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/trino-coordinator.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/trino-coordinator)|[tags](https://cloud.docker.com/repository/docker/lewuathe/trino-coordinator/tags)|
-|worker|lewuathe/trino-worker|[![Docker Pulls](https://img.shields.io/docker/pulls/lewuathe/trino-worker.svg)](https://cloud.docker.com/u/lewuathe/repository/docker/lewuathe/trino-worker)|[tags](https://cloud.docker.com/repository/docker/lewuathe/trino-worker/tags)|
+|coordinator|satyakommula/trino-coordinator|[![Docker Pulls](https://img.shields.io/docker/pulls/satyakommula/trino-coordinator.svg)](https://cloud.docker.com/u/satyakommula/repository/docker/satyakommula/trino-coordinator)|[tags](https://cloud.docker.com/repository/docker/satyakommula/trino-coordinator/tags)|
+|worker|satyakommula/trino-worker|[![Docker Pulls](https://img.shields.io/docker/pulls/satyakommula/trino-worker.svg)](https://cloud.docker.com/u/satyakommula/repository/docker/satyakommula/trino-worker)|[tags](https://cloud.docker.com/repository/docker/satyakommula/trino-worker/tags)|
 
 We are also providing ARM based images. Images for ARM have suffix `-arm64v8` in the tag. For instance, the image of 336 has two types of images supporting multi-architectures. Following architectures are supported for now.
 
@@ -51,18 +51,18 @@ $ docker network create trino_network
 $ docker run -p 8080:8080 -it \
     --net trino_network \
     --name coordinator \
-    lewuathe/trino-coordinator:330-SNAPSHOT http://localhost:8080
+    satyakommula/trino-coordinator:330-SNAPSHOT http://localhost:8080
 
 # Launch two workers
 $ docker run -it \
     --net trino_network \
     --name worker1 \
-    lewuathe/trino-worker:330-SNAPSHOT http://coordinator:8080
+    satyakommula/trino-worker:330-SNAPSHOT http://coordinator:8080
 
 $ docker run -it \
     --net trino_network \
     --name worker2 \
-    lewuathe/trino-worker:330-SNAPSHOT http://coordinator:8080
+    satyakommula/trino-worker:330-SNAPSHOT http://coordinator:8080
 ```
 
 
@@ -75,19 +75,19 @@ version: '3'
 
 services:
   coordinator:
-    image: "lewuathe/trino-coordinator:${trino_VERSION}"
+    image: "satyakommula/trino-coordinator:${trino_VERSION}"
     ports:
       - "8080:8080"
     container_name: "coordinator"
     command: http://coordinator:8080 coordinator
   worker0:
-    image: "lewuathe/trino-worker:${trino_VERSION}"
+    image: "satyakommula/trino-worker:${trino_VERSION}"
     container_name: "worker0"
     ports:
       - "8081:8081"
     command: http://coordinator:8080 worker0
   worker1:
-    image: "lewuathe/trino-worker:${trino_VERSION}"
+    image: "satyakommula/trino-worker:${trino_VERSION}"
     container_name: "worker1"
     ports:
       - "8082:8081"
@@ -107,7 +107,7 @@ While the image provides several default connectors (i.e. JMX, Memory, TPC-H and
 ```yaml
 services:
   coordinator:
-    image: "lewuathe/trino-coordinator:${trino_VERSION}"
+    image: "satyakommula/trino-coordinator:${trino_VERSION}"
     ports:
       - "8080:8080"
     container_name: "coordinator"
@@ -118,11 +118,11 @@ services:
 
 # Terraform
 
-You can launch trino cluster on AWS Fargate by using [`terraform-aws-trino` module](https://github.com/Lewuathe/terraform-aws-trino). The following Terraform configuration provides a trino cluster with 2 worker processes on Fargate.
+You can launch trino cluster on AWS Fargate by using [`terraform-aws-trino` module](https://github.com/satyakommula/terraform-aws-trino). The following Terraform configuration provides a trino cluster with 2 worker processes on Fargate.
 
 ```
 module "trino" {
-  source           = "github.com/Lewuathe/terraform-aws-trino"
+  source           = "github.com/satyakommula/terraform-aws-trino"
   cluster_capacity = 2
 }
 
@@ -131,7 +131,7 @@ output "alb_dns_name" {
 }
 ```
 
-Please see [here](https://github.com/Lewuathe/terraform-aws-trino) for more detail.
+Please see [here](https://github.com/satyakommula/terraform-aws-trino) for more detail.
 
 
 # Development
@@ -153,4 +153,4 @@ $ make snapshot
 
 # LICENSE
 
-[Apache v2 License](https://github.com/Lewuathe/docker-trino-cluster/blob/master/LICENSE)
+[Apache v2 License](https://github.com/satyakommula/docker-trino-cluster/blob/master/LICENSE)

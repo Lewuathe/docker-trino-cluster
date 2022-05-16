@@ -2,7 +2,7 @@ version: '3'
 
 services:
   coordinator:
-    image: "lewuathe/trino-coordinator:${trino_VERSION}"
+    image: "satyakommula/trino-coordinator:${trino_VERSION}"
     ports:
       - "8080:8080"
     container_name: "coordinator"
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./etc/catalog:/usr/local/trino/etc/catalog
   worker0:
-    image: "lewuathe/trino-worker:${trino_VERSION}"
+    image: "satyakommula/trino-worker:${trino_VERSION}"
     container_name: "worker0"
     ports:
       - "8081:8081"

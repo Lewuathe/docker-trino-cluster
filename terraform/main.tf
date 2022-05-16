@@ -1,5 +1,5 @@
 module "trino" {
-  source           = "github.com/Lewuathe/terraform-aws-trino"
+  source           = "github.com/satyakommula/terraform-aws-trino"
   cluster_capacity = 2
 }
 

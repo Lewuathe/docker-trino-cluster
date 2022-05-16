@@ -1,7 +1,6 @@
 ARG VERSION
 
-FROM lewuathe/trino-base:${VERSION}
-LABEL maintainer="lewuathe"
+FROM satyakommula/trino-base:${VERSION}
 
 ADD etc /usr/local/trino/etc
 

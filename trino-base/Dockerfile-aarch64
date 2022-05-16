@@ -3,7 +3,6 @@
 #
 
 FROM arm64v8/openjdk:11
-MAINTAINER lewuathe
 
 ARG VERSION
 ENV TRINO_VERSION=${VERSION}

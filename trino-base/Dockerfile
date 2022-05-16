@@ -3,7 +3,6 @@
 #
 
 FROM openjdk:11-slim
-LABEL maintainer="lewuathe"
 
 ARG VERSION
 ENV TRINO_VERSION=${VERSION}

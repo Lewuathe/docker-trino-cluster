@@ -3,7 +3,6 @@
 #
 
 FROM amazoncorretto:11
-MAINTAINER lewuathe
 
 ARG VERSION
 ENV trino_VERSION=${VERSION}
