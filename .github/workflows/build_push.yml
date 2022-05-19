@@ -25,22 +25,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           make push
-      - name: Docker Hub Description for coordinator
+      - name: Update docker Hub Readme
         if: github.ref == 'refs/heads/main'
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          repository: satyakommula/trino-coordinator
-          readme-filepath: ./README.md
-      - name: Docker Hub Description for worker
-        if: github.ref == 'refs/heads/main'
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          repository: satyakommula/trino-worker
-          readme-filepath: ./README.md
+        run: |
+          ./update-readme.sh
       - name: Release
         if: github.ref == 'refs/heads/main'
         run: |
