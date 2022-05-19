@@ -1,0 +1,47 @@
+name: "build images"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Build_Push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to DockerHub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build
+        run: |
+          make build
+      - name: Push to DockerHub
+        if: github.ref == 'refs/heads/main'
+        run: |
+          make push
+      - name: Docker Hub Description for coordinator
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          repository: satyakommula/trino-coordinator
+          readme-filepath: ./README.md
+      - name: Docker Hub Description for worker
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          repository: satyakommula/trino-worker
+          readme-filepath: ./README.md
+      - name: Release
+        if: github.ref == 'refs/heads/main'
+        run: |
+          make release

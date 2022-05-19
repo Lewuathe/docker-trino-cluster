@@ -1,4 +1,4 @@
-# docker-trino-cluster [![CircleCI](https://circleci.com/gh/satyakommula/docker-trino-cluster.svg?style=svg)](https://circleci.com/gh/satyakommula/docker-trino-cluster) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/satyakommula/docker-trino-cluster) ![GitHub](https://img.shields.io/github/license/satyakommula/docker-trino-cluster)
+# ![GitHub branch checks state](https://img.shields.io/github/checks-status/satyakommula96/docker-trino-cluster/main) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/satyakommula96/docker-trino-cluster)
 
 docker-trino-cluster is a simple tool for launching multiple node [trino](https://trinosql.io/) cluster on docker container.
 The image is synched with the master branch of [trino repository](https://github.com/trinosql/trino). Therefore you can try the latest trino for developing purpose easily.
@@ -6,21 +6,21 @@ The image is synched with the master branch of [trino repository](https://github
 - [Features](#features)
 - [Images](#images)
 - [Usage](#usage)
-  * [docker-compose.yml](#docker-composeyml)
+  - [docker-compose.yml](#docker-composeyml)
 - [Terraform](#terraform)
 - [Development](#development)
-  * [Build Image](#build-image)
-  * [Snapshot Image](#snapshot-image)
+  - [Build Image](#build-image)
+  - [Snapshot Image](#snapshot-image)
 - [LICENSE](#license)
 
-# Features
+## Features
 
 - Multiple node cluster on docker container with docker-compose
 - Distribution of pre-build trino docker images
 - Override the catalog properties with custom one
 - Terraform module to launch ECS based cluster
 
-# Images
+## Images
 
 |Role|Image|Pulls|Tags|
 |:---|:---|:---:|:---:|
@@ -32,9 +32,9 @@ We are also providing ARM based images. Images for ARM have suffix `-arm64v8` in
 - `linux/amd64`
 - `linux/arm64/v8`
 
-# Usage
+## Usage
 
-Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of trino. Image tagged with 306 uses trino 306 inside. Each docker image gets two arguments
+Images are uploaded in [DockerHub](https://hub.docker.com/). These images are build with the corresponding version of trino. Image tagged with 381 uses trino 381 inside. Each docker image gets two arguments
 
 |Index|Argument|Description|
 |:---|:---|:---|
@@ -43,7 +43,7 @@ Images are uploaded in [DockerHub](https://hub.docker.com/). These images are bu
 
 You can launch multi node trino cluster in the local machine as follows.
 
-```sh
+```bash
 # Create a custom network
 $ docker network create trino_network
 
@@ -51,20 +51,19 @@ $ docker network create trino_network
 $ docker run -p 8080:8080 -it \
     --net trino_network \
     --name coordinator \
-    satyakommula/trino-coordinator:330-SNAPSHOT http://localhost:8080
+    satyakommula/trino-coordinator:381-SNAPSHOT http://localhost:8080
 
 # Launch two workers
 $ docker run -it \
     --net trino_network \
     --name worker1 \
-    satyakommula/trino-worker:330-SNAPSHOT http://coordinator:8080
+    satyakommula/trino-worker:381-SNAPSHOT http://coordinator:8080
 
 $ docker run -it \
     --net trino_network \
     --name worker2 \
-    satyakommula/trino-worker:330-SNAPSHOT http://coordinator:8080
+    satyakommula/trino-worker:381-SNAPSHOT http://coordinator:8080
 ```
-
 
 ## docker-compose.yml
 
@@ -96,11 +95,11 @@ services:
 
 The version can be specified as the environment variable.
 
-```
-$ trino_VERSION=330-SNAPSHOT docker-compose up
+```bash
+trino_VERSION=381-SNAPSHOT docker-compose up
 ```
 
-# Custom Catalogs
+## Custom Catalogs
 
 While the image provides several default connectors (i.e. JMX, Memory, TPC-H and TPC-DS), you may want to override the catalog property with your own ones. That can be easily achieved by mounting the catalog directory onto `/usr/local/trino/etc/catalog`. Please look at [`volumes`](https://docs.docker.com/compose/compose-file/#volumes) configuration for docker-compose.
 
@@ -116,11 +115,11 @@ services:
       - ./example/etc/catalog:/usr/local/trino/etc/catalog
 ```
 
-# Terraform
+## Terraform
 
 You can launch trino cluster on AWS Fargate by using [`terraform-aws-trino` module](https://github.com/satyakommula/terraform-aws-trino). The following Terraform configuration provides a trino cluster with 2 worker processes on Fargate.
 
-```
+```Terraform
 module "trino" {
   source           = "github.com/satyakommula/terraform-aws-trino"
   cluster_capacity = 2
@@ -131,26 +130,21 @@ output "alb_dns_name" {
 }
 ```
 
-Please see [here](https://github.com/satyakommula/terraform-aws-trino) for more detail.
+Please see [here](https://github.com/satyakommula96/terraform-aws-trino) for more detail.
 
-
-# Development
+## Development
 
 ## Build Image
 
-```
-$ make build
+```bash
+make build
 ```
 
 ## Snapshot Image
 
 You may want to build the trino with your own build package for the development of trino itself.
 
+```bash
+cp /path/to/trino/trino-server/target/trino-server-381-SNAPSHOT.tar.gz /path/to/docker-trino-cluster/trino-base/
+make snapshot
 ```
-$ cp /path/to/trino/trino-server/target/trino-server-330-SNAPSHOT.tar.gz /path/to/docker-trino-cluster/trino-base/
-$ make snapshot
-```
-
-# LICENSE
-
-[Apache v2 License](https://github.com/satyakommula/docker-trino-cluster/blob/master/LICENSE)
