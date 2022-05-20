@@ -24,7 +24,7 @@ RUN apt-get install -y \
     uuid-runtime \
     less
 
-RUN pip install jinja2
+RUN pip3 install jinja2
 
 # java
 # RUN mkdir -p /usr/java/default && \

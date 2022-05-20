@@ -25,10 +25,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           make push
-      - name: Update docker Hub Readme
-        if: github.ref == 'refs/heads/main'
-        run: |
-          ./update-readme.sh $DOCKER_USER $DOCKER_PASSWORD 
+      # - name: Update docker Hub Readme
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     ./update-readme.sh $DOCKER_USER $DOCKER_PASSWORD 
       - name: Release
         if: github.ref == 'refs/heads/main'
         run: |
