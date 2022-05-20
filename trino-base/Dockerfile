@@ -10,8 +10,10 @@ ENV TRINO_HOME=/usr/local/trino
 ENV BASE_URL=https://repo1.maven.org/maven2
 
 # install dev tools
-RUN apt-get update
-RUN apt-get install -y \
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get install -y \
     curl \
     tar \
     sudo \
