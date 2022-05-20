@@ -31,10 +31,10 @@ jobs:
       #   if: github.ref == 'refs/heads/main'
       #   run: |
       #     ./update-readme.sh $DOCKER_USER $DOCKER_PASSWORD 
-      - name: Publish
-        if: github.ref == 'refs/heads/main'
-      # - uses: oleksiyrudenko/gha-git-credentials@v2-latest
-        with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
-      - run: |
-          make release
+      # - name: Publish
+      #   if: github.ref == 'refs/heads/main'
+      # # - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+      #   with:
+      #     token: '${{ secrets.GITHUB_TOKEN }}'
+      # - run: |
+      #     make release
