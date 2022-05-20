@@ -26,6 +26,7 @@ RUN apt-get update && \
     less
 
 RUN pip3 install jinja2
+RUN ln -sf $(which python3) /usr/bin/python
 
 # java
 # RUN mkdir -p /usr/java/default && \
