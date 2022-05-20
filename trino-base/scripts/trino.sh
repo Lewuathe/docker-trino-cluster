@@ -6,7 +6,7 @@ if [[ -n "$2" ]]; then
 else
   node_id=$(uuidgen)
 fi
-python /usr/local/trino/scripts/render.py \
+python3 /usr/local/trino/scripts/render.py \
   --node-id $node_id \
   --discovery-uri $discovery_uri \
   etc/node.properties.template \

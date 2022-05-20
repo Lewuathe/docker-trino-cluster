@@ -3,6 +3,8 @@ name: "build images"
 on:
   push:
     branches: [main]
+    tags:
+      - "*"
   pull_request:
     branches: [main]
 
@@ -29,7 +31,10 @@ jobs:
       #   if: github.ref == 'refs/heads/main'
       #   run: |
       #     ./update-readme.sh $DOCKER_USER $DOCKER_PASSWORD 
-      - name: Release
+      - name: Publish
         if: github.ref == 'refs/heads/main'
-        run: |
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+      - run: |
           make release

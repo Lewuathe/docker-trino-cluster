@@ -16,10 +16,9 @@ RUN apt-get install -y \
     tar \
     sudo \
     rsync \
-    python \
+    python3 \
     wget \
     python3-pip \
-    python-dev \
     build-essential \
     uuid-runtime \
     less
