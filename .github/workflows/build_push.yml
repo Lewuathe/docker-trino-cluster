@@ -24,7 +24,7 @@ jobs:
         run: |
           make build
       - name: Push to DockerHub
-        if: github.ref == 'refs/heads/main'
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
           make push
       # - name: Update docker Hub Readme
