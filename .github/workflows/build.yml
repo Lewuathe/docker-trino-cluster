@@ -1,0 +1,40 @@
+name: "Build image"
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "*"
+  pull_request:
+    branches: [main]
+
+jobs:
+  Build_Push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to DockerHub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build
+        run: |
+          make build
+      - name: Push to DockerHub
+        if: github.ref == 'refs/heads/main'
+        run: |
+          make push
+      # - name: Update docker Hub Readme
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     ./update-readme.sh $DOCKER_USER $DOCKER_PASSWORD 
+      - name: Publish
+        if: github.ref == 'refs/heads/main'
+      # - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+      - run: |
+          make release
